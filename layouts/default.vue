@@ -48,7 +48,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'NFT Whitelist'
+      title: 'Mintbase WebApp'
     }
   }
 }
