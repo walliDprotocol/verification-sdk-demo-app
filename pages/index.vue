@@ -207,7 +207,7 @@ export default {
     console.log(urlParams.has('oauth_verifier')); // true
 
 
-    pubnub.subscribe({channels: ["verification-iframe"]});
+    pubnub.subscribe({channels: ["verification-iframe-"+ this.sessionID  ]});
 
     pubnub.addListener({
     message: (receivedMessage) => {
