@@ -1,6 +1,8 @@
 <template>
   <v-row justify="center" align="center">
 
+  <Iframe v-if="showIframe"> </Iframe>
+
     <v-dialog
       v-model="dialog"
       width="500"
@@ -32,158 +34,34 @@
        <v-row> <br></v-row>
       <v-row>
        
-        <v-col v-if="!isTwitterConnect" cols="6" sm="6" md="6">
-          
-            <v-row>
-              <button class="btn mini login-btn v-btn v-btn--is-elevated v-size--default"
-              :class="{ load: connectLoader }"
-                @click="twitterConnect"
-                @mouseenter="itsHover = true"
-                @mouseleave="itsHover = false">Twitter connect</button>
-          </v-row>
-    
-       </v-col>
-
-       <v-col  v-else cols="6" sm="6" md="6">
-
-         <v-row class="font-weight-thin"  >
-           <a @click="gotoTwitterProfile" > @{{u_twitter.username}}</a>
-            <!-- username : @{{u_twitter.username}} -->
-          </v-row>
-           <v-row class="font-weight-thin">
-            name : {{u_twitter.name}}
-          </v-row>
-          <v-row class="font-weight-thin">
-            userID : {{u_twitter.id }}
-          </v-row>
-
-       </v-col>
        
-       <v-col v-if="!isDiscordConnect" cols="6" sm="6" md="6">
-        <v-row>
-          <button class="btn mini login-btn v-btn v-btn--is-elevated v-size--default"
-          :class="{ load: connectLoader }"
-          @click="discordConnect"
-          @mouseenter="itsHover = true"
-          @mouseleave="itsHover = false">Discord connect</button>
+
+       <v-col  cols="3" sm="3" md="3"> </v-col>
+       <v-col  cols="6" sm="6" md="6">
+          
+          <v-row>
+            <button class="btn mini login-btn v-btn v-btn--is-elevated v-size--default"
+            :class="{ load: connectLoader }"
+              @click="openWalliDIframe"
+              @mouseenter="itsHover = true"
+              @mouseleave="itsHover = false">WalliD Connector</button>
         </v-row>
+  
+     </v-col>
+
+      
+      
+
+
+      </v-row>
+
+      <v-row>
+
+    
+      </v-row>
+
+      <v-row>
         
-       </v-col>
-
-        <v-col  v-else cols="6" sm="6" md="6">
-         <v-row class="font-weight-thin">
-          username : @{{u_discord.username}}
-          </v-row>
-         <v-row class="font-weight-thin">
-          userID : {{u_discord.id}}
-        </v-row>
-       </v-col>
-
-
-      </v-row>
-
-      <v-row>
-
-        <v-list dense>
-          <v-subheader>Tasks to whitelist your wallet : </v-subheader>
-         
-             <v-list-item 
-                :disabled=true
-                 v-model="discordLoginTask"
-              >
-              <v-list-item-icon>
-                <v-icon v-text="walletConnect.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="'Connect your metamask wallet ' + getAccount" :class="isWalletConnected ? 'text-decoration-line-through' : '' " ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item 
-                :disabled=true
-                 v-model="discordLoginTask"
-              >
-              <v-list-item-icon>
-                <v-icon v-text="discordLoginTask.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="discordLoginTask.task" :class="discordLoginTask.class" ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            
-             <v-list-item
-                :disabled=true
-                v-model="twitterLoginTask"
-              >
-              <v-list-item-icon >
-                <v-icon v-text="twitterLoginTask.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="twitterLoginTask.task" :class="twitterLoginTask.class" ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item
-                :disabled=false
-                v-model="twitterFollowAccount"
-              >
-              <v-list-item-icon >
-                <v-icon v-text="twitterFollowAccount.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title :class="twitterFollowAccount.class" > 
-                    Follow <a @click="gotoTwitterAccount" target="_blank" >{{twitter_account_username}}</a>   account on twitter  
-
-                 </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item
-                
-                v-model="twitterRetweet"
-              >
-              <v-list-item-icon >
-                <v-icon v-text="twitterRetweet.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title :class="twitterRetweet.class"  >
-                  Retweet this twitter <a @click="gotoPost" target="_blank" >POST</a>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-             <v-list-item
-                :disabled=false
-                v-model="discordGuild"
-              >
-              <v-list-item-icon >
-                <v-icon v-text="discordGuild.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title  :class="discordGuild.class"  >
-                  Join to <a @click="gotoDiscordServer" target="_blank" >SERVER</a> on Discord
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-
-        </v-list>
-
-      </v-row>
-
-      <v-row>
-        <v-btn
-          class="ma-2"
-          :disabled=!checkApplyButtonStatus()   
-          color="success"
-          @click="storeWalletMysql()"
-         
-        >
-          Apply
-          <template v-slot:loader>
-            <span>Loading...</span>
-          </template>
-        </v-btn>
 
       </v-row>
       
@@ -197,6 +75,7 @@
 import { mapState } from 'vuex'
 import axios from 'axios';
 import nuxtStorage from 'nuxt-storage';
+import Iframe from '@/components/Iframe'
 
 console.log('BACKEND URL ', process.env.BACKEND_URL );
 
@@ -215,9 +94,12 @@ const TWITTER_ACCOUNT =process.env.TWITTER_ACCOUNT
 
 
 export default {
-  components: {},
+  components: {
+    Iframe
+  },
   data() {
     return {
+      showIframe : false,
       itsHover: false,
       dialog: false,
       connectLoader: false,
@@ -300,59 +182,6 @@ export default {
     let urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams.has('oauth_token')); // true
     console.log(urlParams.has('oauth_verifier')); // true
-
-    // load twitter user
-    let _u_twitter = nuxtStorage.localStorage.getData('twitter_user')
-    console.log('u_twitter : ', _u_twitter );
-    if(_u_twitter)
-    {
-      this.u_twitter = _u_twitter.user;
-      this.u_twitter_acodes =  _u_twitter.authCodes;
-
-      this.isTwitterConnect = true;
-      this.twitterLoginTask.complete = true;
-      this.twitterLoginTask.class = 'text-decoration-line-through';
-      
-      this.checkUserRetweet(this.u_twitter_acodes.accessToken, this.u_twitter.id)
-      this.checkIfFollowTwitterAccount(this.u_twitter_acodes.accessToken, this.u_twitter.id );
-    }
-
-    // load discord user and auth
-     let _u_discord = nuxtStorage.localStorage.getData('discord_user')
-     let _discord_auth = nuxtStorage.localStorage.getData('discord_auth')
-     console.log('Discord user : ', _u_discord );
-     if( _u_discord && _discord_auth)
-     {
-        this.discord_auth = _discord_auth;
-        this.u_discord = _u_discord;
-        this.isDiscordConnect = true;
-        this.discordLoginTask.class = 'text-decoration-line-through';
-        this.discordLoginTask.complete = true;
-        this.verifyGuildOnDiscord()
-     }
-   
-    // twitter callback oauth 
-    let preAuth = nuxtStorage.localStorage.getData('twitter_preAuth')
-    console.log('pre Auth tokens ', preAuth);
-    if(urlParams.has('state') && urlParams.has('code') && preAuth )
-    {
-      let state = urlParams.get('state');
-      let code = urlParams.get('code');
-      console.log('oauth_state: ',  state); 
-      console.log('oauth_code: ',  code);
-      
-      console.log('twitter_preAuth : ', preAuth );
-      this.getTwitterUsername(state,  code, preAuth.codeVerifier );
-    }
-    // discord callback get code then this to grab auth paramteres
-    // get auth token DISCOD only have code callback
-    else if(urlParams.has('code'))
-    {
-      console.log('Callback from discord')
-      this.getDiscordAuth(urlParams.get('code') );
-    }
-
-
   },
   created() {
     // console.log('Window obj ', window )
@@ -361,68 +190,12 @@ export default {
   methods: 
   {
 
-    storeWalletMysql()
-    {
-      // !checkApplyButtonStatus() 
-      console.log('Store wallet on MYSQL database ');
-
-      let self = this;
-      const BACKEND_URL = process.env.BACKEND_URL + '/api/v1/social/wa_store'
-      const headers = {
-        "Content-Type" : 'application/json'
-      }
-      axios
-        .post(BACKEND_URL, 
-        { 
-          wallet :  this.account
-        },
-        { headers : headers})
-        .then(response => {
-          console.log('response from store on BD: ', response.data )
-          if(response.data == true)
-          {
-            console.log('Store Wallet on database' );
-            self.dialog = true;
-          }
-        })
-        .catch(error => {
-          console.log('Error Store wallet ' , error)
-          this.errored = true
-        })
-        .finally(() => console.log('finally'))
-      
-    },
-    gotoDiscordServer(){
-      const link = 'https://discord.com/channels/' + this.discord_server_id;
-      window.open(link, '_blank');
-
-    },
-    gotoTwitterAccount(){
-      const link = "https://twitter.com/" +  this.twitter_account_username ;
-      window.open(link, '_blank');
-    },
-    gotoPost()
-    {
-      console.log('goto POST')
-      const link = "https://twitter.com/" +  TWITTER_ACCOUNT + '/status/' +  TWITTER_POST_ID ;
-      window.open(link, '_blank');
-    },
-    gotoTwitterProfile()
-    {
-      console.log('click in twitter profile ',  );
-      const link = "https://twitter.com/" + this.u_twitter.username;
-      window.open(link, '_blank');
-    },
-   
+    openWalliDIframe(){
+      this.showIframe =true;
+    }, 
     checkApplyButtonStatus() {
 
-    let checkStatus = this.discordLoginTask.complete && 
-              this.twitterLoginTask.complete && 
-                this.twitterFollowAccount.complete && 
-                this.twitterRetweet.complete &&  
-                  this.discordGuild.complete &&
-                  this.account && this.account.length > 1 &&
-                  this.isWalletConnected;
+    let checkStatus = false;
 
       console.log('Apply status : ', checkStatus )
       // console.log(' login twiiter : ', this.twitterLoginTask );
