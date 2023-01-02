@@ -46,6 +46,8 @@
               @mouseenter="itsHover = true"
               @mouseleave="itsHover = false">WalliD Connector</button>
         </v-row>
+        <v-row> <v-textarea :value=JSON.stringify(oauthData)> </v-textarea> </v-row>
+
   
      </v-col>
 
@@ -76,6 +78,16 @@ import { mapState } from 'vuex'
 import axios from 'axios';
 import nuxtStorage from 'nuxt-storage';
 import Iframe from '@/components/Iframe'
+import PubNub from "pubnub";
+
+var pubnub = new PubNub({
+  userId: "verification-sdk-iframe",
+  subscribeKey: "sub-c-b36746ec-a4bf-11ec-8a23-de1bbb7835db",
+  publishKey: "pub-c-db6abb24-ed6e-41a2-b2f2-2322e2dcf786",
+  logVerbosity: true,
+  ssl: true,
+  presenceTimeout: 130,
+});
 
 console.log('BACKEND URL ', process.env.BACKEND_URL );
 
@@ -99,6 +111,7 @@ export default {
   },
   data() {
     return {
+      oauthData : {facebook: {}, linkedin : {}},
       showIframe : false,
       itsHover: false,
       dialog: false,
@@ -176,12 +189,28 @@ export default {
    
   },
   mounted (){
-
+    let self = this;
     console.log('Mounted method .... ', window.location.search)
 
     let urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams.has('oauth_token')); // true
     console.log(urlParams.has('oauth_verifier')); // true
+
+
+    pubnub.subscribe({channels: ["verification-iframe"]});
+
+    pubnub.addListener({
+    message: (receivedMessage) => {
+        // handle message
+        console.log("The message text is: ", receivedMessage.message);
+        console.log("Sent by: ", receivedMessage.publisher);
+        this.oauthData = receivedMessage.message;
+        this.showIframe = false;
+    }
+
+});
+  
+
   },
   created() {
     // console.log('Window obj ', window )
