@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "static": "node server.js",
-    "lint": "vue-cli-service lint",
-    "postinstall": "vue-cli-service build"
-  },
-  "engines": {
-    "node": "16.6.2"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "node server.js",
+    "generate": "nuxt generate",
+    "postinstall": "nuxt generate"
   },
   "dependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
