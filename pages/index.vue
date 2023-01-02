@@ -201,6 +201,7 @@ export default {
     
     this.shuftiProUrl = IFRAME_URL + '?uuid='+  this.sessionID;
     console.log('IFRAME_URL : ', IFRAME_URL );
+    console.log('BENFAS : ',  process.env.BENFAS  );
 
 
     let urlParams = new URLSearchParams(window.location.search);

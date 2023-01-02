@@ -4,6 +4,7 @@ export default {
   env: {
     backendBaseUrl: process.env.BASE_BACKEND_URL || "http://127.0.0.1:3000",
     baseUrl: "http://localhost:3000",
+    IFRAME_URL: process.env.IFRAME_URL || "https://sdk-iframe.herokuapp.com/",
   },
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
