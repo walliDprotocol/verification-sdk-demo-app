@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
 
-  <Iframe v-if="showIframe"> </Iframe>
+  <Iframe v-if="showIframe" :shuftiProUrl="shuftiProUrl" > </Iframe>
 
     <v-dialog
       v-model="dialog"
@@ -79,6 +79,8 @@ import axios from 'axios';
 import nuxtStorage from 'nuxt-storage';
 import Iframe from '@/components/Iframe'
 import PubNub from "pubnub";
+import { v4 as uuidv4 } from 'uuid';
+
 
 var pubnub = new PubNub({
   userId: "verification-sdk-iframe",
@@ -91,6 +93,7 @@ var pubnub = new PubNub({
 
 console.log('BACKEND URL ', process.env.BACKEND_URL );
 
+const IFRAME_URL = process.env.IFRAME_URL
 const TWITTER_LOGIN =  process.env.BACKEND_URL + '/api/v1/redirect/login/twitter'
 const TWITTER_INFO =   process.env.BACKEND_URL +'/api/v1/redirect/twitter'
 
@@ -112,6 +115,7 @@ export default {
   data() {
     return {
       oauthData : {facebook: {}, linkedin : {}},
+      sessionID : 0,
       showIframe : false,
       itsHover: false,
       dialog: false,
@@ -190,7 +194,13 @@ export default {
   },
   mounted (){
     let self = this;
+    this.sessionID = uuidv4()
     console.log('Mounted method .... ', window.location.search)
+    console.log('Session ID ',   this.sessionID);
+    nuxtStorage.localStorage.setData('sessionId', { sessionId : this.sessionID  } );
+    
+    this.shuftiProUrl = IFRAME_URL + '?uuid='+  this.sessionID;
+
 
     let urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams.has('oauth_token')); // true

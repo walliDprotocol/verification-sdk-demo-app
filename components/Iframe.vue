@@ -36,24 +36,31 @@
   <script>
   
   const IFRAME_URL = process.env.IFRAME_URL
+  import nuxtStorage from 'nuxt-storage';
+
 
   export default {
     name: 'ShuftiProModal',
     props: {
-      addEventListener: {
+      shuftiProUrl: {
         type: String,
         default: '',
       },
+
     },
   
     data() {
       return {
         //prod : "https://sdk-iframe.herokuapp.com/"
         //dev : http://localhost:8080/ 
-        shuftiProUrl : IFRAME_URL
+        shuftiProUrl_ : IFRAME_URL
       }
     },
-    mounted() {},
+    mounted() {
+      console.log('URL iframe ; ', this.shuftiProUrl);
+     
+      
+    },
     methods: {
       close() {
         this.$emit('close')

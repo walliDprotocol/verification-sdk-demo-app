@@ -21,6 +21,7 @@
     "nuxt": "^2.15.7",
     "nuxt-storage": "^1.2.2",
     "pubnub": "^7.2.2",
+    "uuid": "^9.0.0",
     "vue-sessionstorage": "^1.0.0",
     "vuetify": "^2.5.5"
   },
