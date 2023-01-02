@@ -35,6 +35,8 @@
   
   <script>
   
+  const IFRAME_URL = process.env.IFRAME_URL
+
   export default {
     name: 'ShuftiProModal',
     props: {
@@ -48,7 +50,7 @@
       return {
         //prod : "https://sdk-iframe.herokuapp.com/"
         //dev : http://localhost:8080/ 
-        shuftiProUrl : "http://localhost:8080/"
+        shuftiProUrl : IFRAME_URL
       }
     },
     mounted() {},
