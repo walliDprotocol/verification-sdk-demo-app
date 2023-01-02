@@ -46,7 +46,9 @@
   
     data() {
       return {
-        shuftiProUrl : "https://sdk-iframe.herokuapp.com/"
+        //prod : "https://sdk-iframe.herokuapp.com/"
+        //dev : http://localhost:8080/ 
+        shuftiProUrl : "http://localhost:8080/"
       }
     },
     mounted() {},
