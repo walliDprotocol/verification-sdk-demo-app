@@ -200,6 +200,7 @@ export default {
     nuxtStorage.localStorage.setData('sessionId', { sessionId : this.sessionID  } );
     
     this.shuftiProUrl = IFRAME_URL + '?uuid='+  this.sessionID;
+    console.log('IFRAME_URL : ', IFRAME_URL );
 
 
     let urlParams = new URLSearchParams(window.location.search);
