@@ -12,7 +12,7 @@
       <v-spacer />
 
     
-     <ui-connect-btn />
+     <!-- <ui-connect-btn /> -->
     
      
     </v-app-bar>
