@@ -187,8 +187,8 @@ export default {
     openWalliDIframe() {
       // this.showIframe = true;
       const popup = window.open(
-        // process.env.IFRAME_URL,
-        "http://localhost:8080",
+        process.env.IFRAME_URL,
+        // "http://localhost:8080",
         "popup",
         "width=600,height=600,toolbar=no,menubar=no"
       );
