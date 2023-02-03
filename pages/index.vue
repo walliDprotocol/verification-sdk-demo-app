@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center" align="center">
-      <!-- <Iframe v-if="showIframe" :shuftiProUrl="shuftiProUrl"> </Iframe> -->
+      <!-- <Iframe v-if="showIframe" :iframeUrl="iframeUrlSessionId"> </Iframe> -->
 
       <v-dialog v-model="dialog" width="500">
         <v-card>
@@ -160,7 +160,6 @@ export default {
       sessionId: this.sessionID,
     });
 
-    this.shuftiProUrl = IFRAME_URL + "?uuid=" + this.sessionID;
     console.log("IFRAME_URL : ", IFRAME_URL);
     console.log("BENFAS : ", process.env.BENFAS);
 
@@ -186,8 +185,10 @@ export default {
   methods: {
     openWalliDIframe() {
       // this.showIframe = true;
+      this.iframeUrlSessionId = IFRAME_URL + "?uuid=" + this.sessionID;
+
       const popup = window.open(
-        process.env.IFRAME_URL,
+        this.iframeUrlSessionId,
         // "http://localhost:8080",
         "popup",
         "width=600,height=600,toolbar=no,menubar=no"
