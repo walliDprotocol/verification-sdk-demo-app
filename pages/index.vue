@@ -191,7 +191,7 @@ export default {
         this.iframeUrlSessionId,
         // "http://localhost:8080",
         "popup",
-        "width=600,height=600,toolbar=no,menubar=no"
+        "width=900,height=640,toolbar=no,menubar=no"
       );
     },
     checkApplyButtonStatus() {
