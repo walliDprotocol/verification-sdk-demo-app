@@ -43,6 +43,16 @@ export default {
           icon: 'mdi-apps',
           title: 'Dashboard',
           to: '/'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'Iframe laucher',
+          to: '/launcher'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'Creator form',
+          to: '/creator'
         }
       ],
       miniVariant: false,
