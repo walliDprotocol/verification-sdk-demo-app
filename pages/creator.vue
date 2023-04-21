@@ -33,8 +33,8 @@
   <v-col cols="12" sm="8" md="8" class="text-center">
         <button
           class="btn mini login-btn v-btn v-btn--is-elevated v-size--default"
-          :class="{ load: connectLoader }"
-          @click="openWalliDIframe"
+         
+          @click="mintNft"
           @mouseenter="itsHover = true"
           @mouseleave="itsHover = false"
         >
@@ -54,15 +54,16 @@ import { v4 as uuidv4 } from "uuid";
 
 export default {
   components: {
-    
+    //  :class="{ load: connectLoader }"
   },
   data() {
     return {
+      twitter_post : "Just published my latest licensed NFT on mintbase! Excited to announce that I'm sharing the sales royalties with @masterviana and @CryptoVeiga 🤝💰 https://rb.gy/xug7r Get your wallet and claim your share of the rewards with @wallidonchain at https://rb.gy/nre92",
       nft_title : "Golden Hammer",
       nft_description: "",
       holder1  : "@masterviana",
       holder1Perc : "90",
-      holder2  : "@fveiga",
+      holder2  : "@CryptoVeiga",
       holder2Perc : "10",
       sessionID: 0
     };
@@ -87,6 +88,12 @@ export default {
   methods: {
     mintNft() {
       console.log("mint nft : ");
+
+      window.open(
+       'https://twitter.com/intent/tweet?text= '+ this.twitter_post,
+        '',
+        '_blank, width=500, height=500, resizable=yes, scrollbars=yes'
+      )
      
     },
    
