@@ -131,7 +131,7 @@ export default {
         // handle message
         console.log("The message text is: ", receivedMessage.message);
         console.log("Sent by: ", receivedMessage.publisher);
-        this.oauthData = receivedMessage?.message?.data;
+        this.oauthData = receivedMessage?.message;
         this.showIframe = false;
       },
     });
