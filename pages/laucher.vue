@@ -206,7 +206,8 @@ export default {
       console.log("**** Iframe should lauch in secs ");
 
       this.iframeUrlSessionId =
-        "http://localhost:8080/royalties" +
+        //"http://localhost:8080/royalties" +
+        "https://sdk-iframe.herokuapp.com/royalties" + 
         "?uuid=" +
         this.sessionID +
         "&nft=643963997c5c847a2c875841";
