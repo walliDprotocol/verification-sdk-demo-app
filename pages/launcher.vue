@@ -207,7 +207,8 @@ export default {
       let nftId = urlParams.get("nft_id") || this.NFT_ID;
 
       this.iframeUrlSessionId =
-        "http://localhost:8080/royalties" +
+        //"http://localhost:8080/royalties" +
+        "https://sdk-iframe.herokuapp.com/royalties" + 
         "?uuid=" +
         this.sessionID +
         `&nft=${nftId}`;
