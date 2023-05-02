@@ -1,7 +1,5 @@
 <template>
   <v-container>
-    <v-row></v-row>
-
     <v-row>
       <v-col cols="12" sm="6" md="3">
         <h4>Iframe will be launched in 5s</h4>
@@ -205,11 +203,14 @@ export default {
     launchIframe() {
       console.log("**** Iframe should lauch in secs ");
 
+      let urlParams = new URLSearchParams(window.location.search);
+      let nftId = urlParams.get("nft_id") || this.NFT_ID;
+
       this.iframeUrlSessionId =
         "http://localhost:8080/royalties" +
         "?uuid=" +
         this.sessionID +
-        "&nft=643963997c5c847a2c875841";
+        `&nft=${nftId}`;
 
       const popup = window.open(
         this.iframeUrlSessionId,
