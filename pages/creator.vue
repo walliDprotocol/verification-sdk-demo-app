@@ -58,12 +58,12 @@ export default {
   },
   data() {
     return {
-      twitter_post : "Just published my latest licensed NFT on mintbase! Excited to announce that I'm sharing the sales royalties with @masterviana and @CryptoVeiga 🤝💰 https://rb.gy/xug7r Get your wallet and claim your share of the rewards with @wallidonchain at https://rb.gy/nre92",
+      twitter_post : "Just published my latest licensed NFT on mintbase! Excited to announce that I'm sharing the sales royalties with @_o_ruivo_ and @microchipgnu 🤝💰 https://rb.gy/xug7r Get your wallet and claim your share of the rewards with @wallidonchain at https://rb.gy/nre92",
       nft_title : "Golden Hammer",
       nft_description: "",
-      holder1  : "@masterviana",
+      holder1  : "@_o_ruivo_",
       holder1Perc : "90",
-      holder2  : "@CryptoVeiga",
+      holder2  : "@microchipgnu",
       holder2Perc : "10",
       sessionID: 0
     };
