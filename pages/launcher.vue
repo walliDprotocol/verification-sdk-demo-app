@@ -123,7 +123,10 @@ export default {
     console.log("Mounted method .... ", window.location.search);
     console.log("Session ID ", this.sessionID);
     pubnub.subscribe({
-      channels: ["verification-iframe-" + this.sessionID, REQUEST_SEED_CHANNEL],
+      channels: [
+        "verification-iframe-" + this.sessionID,
+        REQUEST_SEED_CHANNEL + this.sessionID,
+      ],
     });
 
     pubnub.addListener({
