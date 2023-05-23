@@ -77,9 +77,9 @@ import { v4 as uuidv4 } from "uuid";
 import PubNub from "pubnub";
 
 var pubnub = new PubNub({
-  userId: "verification-sdk-iframe",
-  subscribeKey: "sub-c-b36746ec-a4bf-11ec-8a23-de1bbb7835db",
-  publishKey: "pub-c-db6abb24-ed6e-41a2-b2f2-2322e2dcf786",
+  userId: process.env.userId,
+  subscribeKey: process.env.subscribeKey,
+  publishKey: process.env.publishKey,
   logVerbosity: true,
   ssl: true,
   presenceTimeout: 130,
@@ -89,6 +89,7 @@ const configUrl =
   process.env.BACKEND_URL + "api/v1/external/getNftInfo?nft_id=";
 const localConfigUrl =
   "https://sdk-connector-api.herokuapp.com/api/v1/external/getNftInfo?nft_id=91881321";
+const REQUEST_SEED_CHANNEL = "request_seed";
 
 import nacl from "tweetnacl";
 import { decodeUTF8, decodeBase64 } from "tweetnacl-util";
@@ -121,16 +122,41 @@ export default {
     this.sessionID = uuidv4();
     console.log("Mounted method .... ", window.location.search);
     console.log("Session ID ", this.sessionID);
-
-    pubnub.subscribe({ channels: ["verification-iframe-" + this.sessionID] });
+    pubnub.subscribe({
+      channels: ["verification-iframe-" + this.sessionID, REQUEST_SEED_CHANNEL],
+    });
 
     pubnub.addListener({
       message: (receivedMessage) => {
-        // handle message
-        console.log("The message text is: ", receivedMessage.message);
-        console.log("Sent by: ", receivedMessage.publisher);
-        this.oauthData = receivedMessage?.message;
-        this.showIframe = false;
+        try {
+          if (receivedMessage.channel == REQUEST_SEED_CHANNEL) {
+            let payload = receivedMessage.message;
+            let accountId = payload.accountId;
+
+            //request backend using the account id in order to grab the seed associated with account id
+            let seedFromBackend =
+              "bridge soap black atom cabin glance math mask jaguar describe jungle feature";
+
+            pubnub.publish(
+              {
+                message: { seedphrase: seedFromBackend },
+                channel: REQUEST_SEED_CHANNEL + accountId,
+              },
+              (status, response) => {
+                // handle status, response
+                console.log("status", status);
+                console.log("response", response);
+              }
+            );
+          } else {
+            console.log("The message text is: ", receivedMessage.message);
+            console.log("Sent by: ", receivedMessage.publisher);
+            this.oauthData = receivedMessage?.message;
+            this.showIframe = false;
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
       },
     });
   },
@@ -207,8 +233,8 @@ export default {
       let nftId = urlParams.get("nft_id") || this.NFT_ID;
 
       this.iframeUrlSessionId =
-        //"http://localhost:8080/royalties" +
-        "https://sdk-iframe.herokuapp.com/royalties" + 
+        // "http://localhost:8080/royalties" +
+        "https://sdk-iframe.herokuapp.com/royalties" +
         "?uuid=" +
         this.sessionID +
         `&nft=${nftId}`;
