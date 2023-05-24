@@ -80,7 +80,7 @@ var pubnub = new PubNub({
   userId: process.env.userId,
   subscribeKey: process.env.subscribeKey,
   publishKey: process.env.publishKey,
-  logVerbosity: true,
+  // logVerbosity: true,
   ssl: true,
   presenceTimeout: 130,
 });
@@ -89,7 +89,7 @@ const configUrl =
   process.env.BACKEND_URL + "api/v1/external/getNftInfo?nft_id=";
 const localConfigUrl =
   "https://sdk-connector-api.herokuapp.com/api/v1/external/getNftInfo?nft_id=91881321";
-const REQUEST_SEED_CHANNEL = "request_seed";
+const REQUEST_SEED_CHANNEL = "request_seed_";
 
 import nacl from "tweetnacl";
 import { decodeUTF8, decodeBase64 } from "tweetnacl-util";
@@ -132,7 +132,12 @@ export default {
     pubnub.addListener({
       message: (receivedMessage) => {
         try {
-          if (receivedMessage.channel == REQUEST_SEED_CHANNEL) {
+          console.log("Sent to: ", receivedMessage.channel);
+
+          if (
+            receivedMessage.channel ==
+            REQUEST_SEED_CHANNEL + this.sessionID
+          ) {
             let payload = receivedMessage.message;
             let accountId = payload.accountId;
 
@@ -143,7 +148,7 @@ export default {
             pubnub.publish(
               {
                 message: { seedphrase: seedFromBackend },
-                channel: REQUEST_SEED_CHANNEL + accountId,
+                channel: REQUEST_SEED_CHANNEL + accountId + this.sessionID,
               },
               (status, response) => {
                 // handle status, response
@@ -236,8 +241,8 @@ export default {
       let nftId = urlParams.get("nft_id") || this.NFT_ID;
 
       this.iframeUrlSessionId =
-        // "http://localhost:8080/royalties" +
-        "https://sdk-iframe.herokuapp.com/royalties" +
+        "http://localhost:8080/royalties" +
+        // "https://sdk-iframe.herokuapp.com/royalties" +
         "?uuid=" +
         this.sessionID +
         `&nft=${nftId}`;
