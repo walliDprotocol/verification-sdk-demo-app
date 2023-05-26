@@ -15,10 +15,25 @@ https://verification-sdk-demo-webapp.herokuapp.com/
 
 ## Build and deploy
 
-For using on a develeopment environment it using `dotenv` module so you could use a .env file to add the following env vars
+To utilize it within a development environment, the implementation involves employing the `dotenv` module, which allows for the utilization of a .env file to incorporate the subsequent environment variables.
+
+ Here's an example of how the .env file with variables
+
+```
+VUE_APP_BACKEND_URL=<backend_url>
+VUE_APP_NEAR_SOCIAL_CONTRACT_TESTNET=<contract_address>
+VUE_APP_NEAR_SOCIAL_CONTRACT=<social_contract>
+VUE_APP_NEAR_NETWORK_TESTNET=testnet
+VUE_APP_NEAR_NETWORK=mainnet
+
+# pubnub env vars
+VUE_APP_PUBNUB_USER_ID=<pubnub_id>
+VUE_APP_PUBNUB_SUBSCRIBE_KEY=<PUBNUB_SUBSCRIBE_KEY>
+VUE_APP_PUBLISH_KEY=<PUBLISH_KEY>
+```
 
 
-install depencies
+Install depencies
 
 ```
 npm install
