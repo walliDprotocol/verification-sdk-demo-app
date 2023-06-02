@@ -1,4 +1,4 @@
-# Verification and Authentication Demos.
+# Verification and Authentication Demos
 
 ## About this repo
 
@@ -84,7 +84,7 @@ Airdrop an NFT to a Twitter account after verifying username and token ownership
 | Data Source | Parameter          | Score |
 |----------|-----------------------|--------|
 | Twitter  | Account               | +1     |
-| Celo | > 10 WalliD rokens       | +50    |
+| NEAR | > 10 NEAR tokens          | +50    |
 
 
 
