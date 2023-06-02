@@ -185,10 +185,12 @@ export default {
   methods: {
     openWalliDIframe() {
       // this.showIframe = true;
-      this.iframeUrlSessionId = IFRAME_URL + "?uuid=" + this.sessionID;
-
-      const popup = window.open(
-        this.iframeUrlSessionId,
+      const iframeUrl = new URL(IFRAME_URL);
+      iframeUrl.searchParams.set("uuid", this.sessionID);
+      iframeUrl.searchParams.set("flow", "celo");
+      iframeUrl.searchParams.set("configId", "64775dbe48818915e2a8bda3");
+      window.open(
+        iframeUrl,
         // "http://localhost:8080",
         "popup",
         "width=900,height=640,toolbar=no,menubar=no"
