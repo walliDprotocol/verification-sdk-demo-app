@@ -78,7 +78,7 @@ Airdrop an NFT to a Twitter account after verifying username and token ownership
 - Verify Twitter account
 - Verify WalliD token  ownership
 - Get access to the NFT claim page
-- 
+
 ### Data sources and parameters configured
 
 | Data Source | Parameter          | Score |
