@@ -1,63 +1,96 @@
-## Mintbase <> WalliD Demo:
+# Verification and Authentication Demos.
 
- 1. Launch Creator page [here](https://verification-sdk-demo-webapp.herokuapp.com/creator/) to roleplay as the NFT creator;
- 2. Confirm the usernames of the intended royalty owners
- 3. Click `Mint`to prompt te identification process
- 4. Confirm the Tweet containing the identified users and a URL to verify their IDs
- 5. Roleplay as the Royalty owner by clicking the URL embedded in post of the creator
- 6. Click `Open iframe`to launch WalliD verification process
- 7. Complete The verification and wallet creation process 
+## About this repo
+
+This repository serves as a comprehensive collection of test environments for various authentication and verification flows supported by WalliD's [`core-config libs`](https://github.com/walliDprotocol/core-config) and [`verification-modal`](https://github.com/walliDprotocol/verification-modal). Its purpose is to demonstrate the typical use cases, providing a valuable resource for developers seeking to explore and implement these functionalities.
+
+## Authentication flow
+> To learn all about authentication flows check our documentation [here](https://docs.wallid.io/config-dashboard/authentication).
+
+### Use case
+
+Sign/up users with social logins and/or web3 wallets
+
+### How to test it
+
+- Launch this demo website
+- Click on `Sign-up`
+- Choose your favourie authenticator and connect with it to complete the process 
+
+### Authenticators configured
+
+#### Social Logins
+- Google
+- Twitter
+- Discord
+- OpenAi
+- Reddit
+- Facebook
+#### web3 wallets
+- WalliD Wallet
+- Metamask
+- Wallet connect
+ 
+## Independent verification flow
+>To learn all about independent verification flows check our documentation [here](https://docs.wallid.io/config-dashboard/data-verification).
+
+### Use case
+
+Trust scores based on social network history and on-chain credentials
+
+### How to test it
+
+- Launch [this demo website](https://verification-sdk-demo-webapp.herokuapp.com). You’ll see a blank username and trust score of 0. 
+- Choose one of the data sources available to verify your data
+- Follow the steps displayed in the website to connect to different data sources and verify the requested data
+- Check the status of the verified data , username and the increased trust score displayed in the website
+
+### Data sources and parameters configured
+
+
+| Data Source | Parameter          | Score |
+|----------|-----------------------|--------|
+| Twitter  | Account               | +1     |
+| Twitter  | > 100 followers       | +10    |
+| Twitter  | < 1 year account      | +20    |
+| Github   | Account               | +1     |
+| Github   | <5 repos              | +10    |
+| Github   | <5 contributions      | +10    |
+| Google   | Account               | +1     |
+| NEAR     | Wallet address        | +1     |
+| NEAR     | < 10 NEAR tokens      | +50    |
 
 
 
-## Live demo link
-https://verification-sdk-demo-webapp.herokuapp.com/
+## Combined verification flow
+>To learn all about combined verification flows check our documentation [here](https://docs.wallid.io/config-dashboard/data-verification).
 
-## Build and deploy
+### Use case
 
-To utilize it within a development environment, the implementation involves employing the `dotenv` module, which allows for the utilization of a .env file to incorporate the subsequent environment variables.
+Airdrop an NFT to a Twitter account after verifying username and token ownership 
 
- Here's an example of how the .env file with variables
+### How to test it
 
-```
-VUE_APP_BACKEND_URL=<backend_url>
-VUE_APP_NEAR_SOCIAL_CONTRACT_TESTNET=<contract_address>
-VUE_APP_NEAR_SOCIAL_CONTRACT=<social_contract>
-VUE_APP_NEAR_NETWORK_TESTNET=testnet
-VUE_APP_NEAR_NETWORK=mainnet
+- Launch [this demo website](https://wallid-demo-celo.herokuapp.com/). 
+- Write your Twitter handle to set it as eligible for the NFT airdrop
+- Get 50 WalliD test tokens in the “faucet button”
+- Click on “Claim NFT” to launch WalliD flow
+- Verify Twitter account
+- Verify WalliD token  ownership
+- Get access to the NFT claim page
+- 
+### Data sources and parameters configured
 
-# pubnub env vars
-VUE_APP_PUBNUB_USER_ID=<pubnub_id>
-VUE_APP_PUBNUB_SUBSCRIBE_KEY=<PUBNUB_SUBSCRIBE_KEY>
-VUE_APP_PUBLISH_KEY=<PUBLISH_KEY>
-```
+| Data Source | Parameter          | Score |
+|----------|-----------------------|--------|
+| Twitter  | Account               | +1     |
+| Celo | > 10 WalliD rokens       | +50    |
 
 
-Install depencies
 
-```
-npm install
-```
 
-build frontend
 
-```
-npm run generate
-```
 
-run frontend
 
-```
-npm run start
-```
 
-## Environment variables
 
-```
-BACKEND_URL=<backend_url>
-DISCORD_AUTH=<redirect discord url>
-DISCORD_GUILD_ID=<discord_server id>
-TWITTER_ACCOUNT=<username of account to check follow>
-TWITTER_ACCOUNT_ID=<account id of account to check follow>
-TWITTER_POST_ID=<post id>
-```
