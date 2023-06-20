@@ -1,11 +1,6 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12" sm="6" md="3">
-        <h4>Iframe will be launched in 5s</h4>
-      </v-col>
-    </v-row>
-    <v-row>
+  <v-container class="pt-16">
+    <v-row class="mt-12">
       <v-col cols="12" sm="6" md="3">
         <v-text-field
           v-model="NFT_ID"

@@ -1,0 +1,10 @@
+<svg width="38" height="11" viewBox="0 0 38 11" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="98.77%" y1="100%" x2="4.489%" y2="100%" id="7p6e7wz9ra">
+            <stop stop-color="#7ACEFD" offset="0%"/>
+            <stop stop-color="#73DDE7" offset="49.882%"/>
+            <stop stop-color="#64FFDE" offset="100%"/>
+        </linearGradient>
+    </defs>
+    <rect x="681" y="492" width="38" height="11" rx="5.5" transform="translate(-681 -492)" fill="url(#7p6e7wz9ra)" fill-rule="evenodd"/>
+</svg>

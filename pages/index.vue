@@ -1,42 +1,6 @@
 <template>
-  <v-container>
-    <v-row justify="center" align="center">
-      <!-- <Iframe v-if="showIframe" :iframeUrl="iframeUrlSessionId"> </Iframe> -->
-
-      <v-dialog v-model="dialog" width="500">
-        <v-card>
-          <v-card-title class="text-h5 grey lighten-2">
-            Mintabase Webapp
-          </v-card-title>
-          <v-divider></v-divider>
-
-          <h3>Thanks for your participation</h3>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false"> OK </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-      <v-col cols="12" sm="8" md="8" class="text-center">
-        <button
-          class="btn mini login-btn v-btn v-btn--is-elevated v-size--default"
-          :class="{ load: connectLoader }"
-          @click="openWalliDIframe"
-          @mouseenter="itsHover = true"
-          @mouseleave="itsHover = false"
-        >
-          WalliD Connector
-        </button>
-      </v-col>
-      <v-col cols="8">
-        <v-textarea :value="JSON.stringify(oauthData, null, 4)" auto-grow>
-        </v-textarea>
-      </v-col>
-    </v-row>
+  <v-container class="wallidao pt-16">
+    <Profile></Profile>
   </v-container>
 </template>
 
@@ -45,21 +9,9 @@ import { mapState } from "vuex";
 import axios from "axios";
 import nuxtStorage from "nuxt-storage";
 import Iframe from "@/components/Iframe";
-import PubNub from "pubnub";
-import { v4 as uuidv4 } from "uuid";
-
-var pubnub = new PubNub({
-  userId: "verification-sdk-iframe",
-  subscribeKey: "sub-c-b36746ec-a4bf-11ec-8a23-de1bbb7835db",
-  publishKey: "pub-c-db6abb24-ed6e-41a2-b2f2-2322e2dcf786",
-  logVerbosity: true,
-  ssl: true,
-  presenceTimeout: 130,
-});
 
 console.log("BACKEND URL ", process.env.BACKEND_URL);
 
-const IFRAME_URL = process.env.IFRAME_URL;
 const TWITTER_LOGIN =
   process.env.BACKEND_URL + "/api/v1/redirect/login/twitter";
 const TWITTER_INFO = process.env.BACKEND_URL + "/api/v1/redirect/twitter";
@@ -70,8 +22,6 @@ const DISCORD_AUTH_BACKEND =
 const GET_GUILDS = "https://discord.com/api/users/@me/guilds";
 
 const DISCORD_GUILD_ID = process.env.DISCORD_GUILD_ID;
-const TWITTER_ACCOUNT_ID = process.env.TWITTER_ACCOUNT_ID;
-const TWITTER_POST_ID = process.env.TWITTER_POST_ID || "1499189957717463043";
 const TWITTER_ACCOUNT = process.env.TWITTER_ACCOUNT;
 
 export default {
@@ -83,12 +33,8 @@ export default {
       oauthData: { facebook: {}, linkedin: {} },
       sessionID: 0,
       showIframe: false,
-      itsHover: false,
       dialog: false,
       connectLoader: false,
-      twitter_account_username: TWITTER_ACCOUNT,
-      discord_server_id: DISCORD_GUILD_ID,
-      redirect_url: "",
       btnText: "Connect",
 
       u_twitter_acodes: "",
@@ -152,50 +98,20 @@ export default {
     },
   },
   mounted() {
-    let self = this;
-    this.sessionID = uuidv4();
     console.log("Mounted method .... ", window.location.search);
     console.log("Session ID ", this.sessionID);
     nuxtStorage.localStorage.setData("sessionId", {
       sessionId: this.sessionID,
     });
 
-    console.log("IFRAME_URL : ", IFRAME_URL);
-    console.log("BENFAS : ", process.env.BENFAS);
-
     let urlParams = new URLSearchParams(window.location.search);
     console.log(urlParams.has("oauth_token")); // true
     console.log(urlParams.has("oauth_verifier")); // true
-
-    pubnub.subscribe({ channels: ["verification-iframe-" + this.sessionID] });
-
-    pubnub.addListener({
-      message: (receivedMessage) => {
-        // handle message
-        console.log("The message text is: ", receivedMessage.message);
-        console.log("Sent by: ", receivedMessage.publisher);
-        this.oauthData = receivedMessage.message;
-        this.showIframe = false;
-      },
-    });
   },
   created() {
     // console.log('Window obj ', window )
   },
   methods: {
-    openWalliDIframe() {
-      // this.showIframe = true;
-      const iframeUrl = new URL(IFRAME_URL);
-      iframeUrl.searchParams.set("uuid", this.sessionID);
-      iframeUrl.searchParams.set("flow", "celo");
-      iframeUrl.searchParams.set("configId", "64775dbe48818915e2a8bda3");
-      window.open(
-        iframeUrl,
-        // "http://localhost:8080",
-        "popup",
-        "width=900,height=640,toolbar=no,menubar=no"
-      );
-    },
     checkApplyButtonStatus() {
       let checkStatus = false;
 
@@ -399,7 +315,6 @@ export default {
 
             // window.open(response.data.redirect, '_blank');
             // win
-            //  this.redirect_url = response.data.redirect;
             //  this.dialog=true;
           }
         })
@@ -460,3 +375,14 @@ export default {
   },
 }; //export body
 </script>
+<style>
+.wallidao {
+  width: 100vw;
+  max-width: unset;
+  height: 100vh;
+  background: url("@/assets/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: auto;
+}
+</style>

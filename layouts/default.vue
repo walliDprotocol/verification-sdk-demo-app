@@ -1,7 +1,13 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-toolbar-title v-text="title" />
+    <v-app-bar dark fixed style="background-color: #8080971e">
+      <v-toolbar-title>
+        <v-img
+          :max-width="'140px'"
+          contain
+          :src="require('@/assets/logo-wallid.png')"
+        ></v-img>
+      </v-toolbar-title>
       <v-spacer />
 
       <!-- <ui-connect-btn /> -->
@@ -11,12 +17,10 @@
       <nuxt-link :to="'/launcher'"><v-btn> Launch</v-btn> </nuxt-link>
     </v-app-bar>
     <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
+      <Nuxt />
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
+    <v-footer dark :absolute="!fixed" style="background-color: #8080971e">
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -26,7 +30,6 @@
 export default {
   data() {
     return {
-      clipped: false,
       drawer: false,
       fixed: false,
       items: [
@@ -54,3 +57,9 @@ export default {
   },
 };
 </script>
+<style>
+.v-toolbar__content {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+</style>
