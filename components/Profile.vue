@@ -118,6 +118,7 @@ export default {
         // handle message
         console.log("The message text is: ", receivedMessage.message);
         console.log("Sent by: ", receivedMessage.publisher);
+        this.socialIds = DEFAULT_SOCIAL_IDS;
         this.handleOauthData(receivedMessage.message);
       },
     });
@@ -171,6 +172,7 @@ export default {
         }
       }
       console.log("verifiedEntries", verifiedEntries);
+      console.log("this.currentTrustScore", this.currentTrustScore);
 
       const percentage = (verifiedEntries / totalEntries) * 100;
       const interval = setInterval(() => {
