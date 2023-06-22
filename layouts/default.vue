@@ -14,9 +14,9 @@
 
       <!-- <ui-connect-btn /> -->
 
-      <nuxt-link :to="'/creator'"> <v-btn> Create </v-btn> </nuxt-link>
+      <nuxt-link :to="'/creator'"> <v-btn text> Create </v-btn> </nuxt-link>
 
-      <nuxt-link :to="'/launcher'"><v-btn> Launch</v-btn> </nuxt-link>
+      <nuxt-link :to="'/launcher'"><v-btn text> Launch</v-btn> </nuxt-link>
     </v-app-bar>
     <v-main>
       <Nuxt />
