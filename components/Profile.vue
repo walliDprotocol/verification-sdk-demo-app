@@ -5,7 +5,11 @@
         <h1>Your profile</h1>
       </v-col>
       <v-col class="" justify="center" align="right">
-        <div class="connected-wallet d-flex">
+        <div
+          title="Logout"
+          @click="resetCache()"
+          class="connected-wallet d-flex"
+        >
           <span style="font-size: 8px; margin-top: 4px; margin-right: 2px">
             🟢
           </span>
@@ -33,8 +37,11 @@
         <v-card class="card-bg">
           <v-container class="pa-0 py-8">
             <v-row class="" align="center">
-              <v-col cols="4" class="text-center">
-                <v-sheet style="height: 200px" class="text-left">
+              <v-col cols="auto" class="text-center">
+                <v-sheet
+                  style="height: 200px; min-width: 220px"
+                  class="text-left pl-4 pr-0"
+                >
                   <h4 class="mb-4">My trust score</h4>
                   <p class="trust-score">{{ currentTrustScore }}%</p>
                   <div class="progress-bar">
@@ -47,7 +54,7 @@
                   </div>
                 </v-sheet>
               </v-col>
-              <v-col cols="8">
+              <v-col cols="7">
                 <v-sheet style="height: 200px" class="text-left">
                   <v-row>
                     <v-col>
@@ -58,13 +65,18 @@
                     <v-col
                       cols="auto"
                       v-for="{ name, verified } in socialIds"
-                      :key="socialId"
+                      :key="name"
+                      style="position: relative"
                     >
                       <v-img
                         v-if="verified"
+                        class="verified-check"
+                        contain
+                        width="20"
                         :src="require(`@/assets/check.svg`)"
                       ></v-img>
                       <v-img
+                        :style="[verified ? { opacity: 1 } : { opacity: 0.28 }]"
                         width="52"
                         :src="require(`@/assets/${name}.webp`)"
                       ></v-img>
@@ -72,11 +84,7 @@
                   </v-row>
                   <v-row>
                     <v-col>
-                      <v-btn
-                        class="advance-btn"
-                        :class="{ load: connectLoader }"
-                        @click="openWalliDIframe"
-                      >
+                      <v-btn class="advance-btn" @click="openWalliDIframe">
                         Increase your trust score
                       </v-btn>
                     </v-col>
@@ -93,6 +101,13 @@
 <script>
 import { Verifier } from "@/plugins/verification-sdk.js";
 
+const DEFAULT_SOCIAL_IDS = {
+  nearTokens: { name: "nearTokens", verified: false },
+  twitter: { name: "twitter", verified: false },
+  google: { name: "google", verified: false },
+  github: { name: "github", verified: false },
+};
+
 export default {
   components: {},
   mounted() {
@@ -103,24 +118,74 @@ export default {
         // handle message
         console.log("The message text is: ", receivedMessage.message);
         console.log("Sent by: ", receivedMessage.publisher);
-        this.oauthData = receivedMessage.message;
+        this.handleOauthData(receivedMessage.message);
       },
     });
+
+    this.loadOauthStorage();
+
+    this.handleOauthData({});
   },
   data() {
     return {
       walletAddress: "0x707…dAa8",
       currentTrustScore: 0,
-      socialIds: [
-        { name: "near" },
-        { name: "twitter" },
-        { name: "google" },
-        { name: "github" },
-      ],
+      socialIds: DEFAULT_SOCIAL_IDS,
+      oauthData: {},
     };
   },
   methods: {
-    increaseTrustScore() {},
+    resetCache() {
+      sessionStorage.removeItem("socialIds");
+      this.socialIds = DEFAULT_SOCIAL_IDS;
+      this.handleOauthData({});
+    },
+    loadOauthStorage() {
+      this.socialIds = JSON.parse(
+        sessionStorage.getItem("socialIds") || JSON.stringify(this.socialIds)
+      );
+    },
+    handleOauthData(oauthData) {
+      Object.keys(oauthData).forEach((socialId) => {
+        console.log(socialId);
+
+        if (
+          socialId in this.socialIds &&
+          Object.keys(oauthData[socialId]).length > 0
+        )
+          this.$set(this.socialIds, socialId, {
+            ...this.socialIds[socialId],
+            verified: true,
+          });
+        console.log(this.socialIds);
+      });
+      sessionStorage.setItem("socialIds", JSON.stringify(this.socialIds));
+      this.increaseTrustScore();
+    },
+
+    async increaseTrustScore() {
+      const totalEntries = Object.keys(this.socialIds).length;
+      let verifiedEntries = 0;
+
+      // Iterate through each entry and count the verified ones
+      for (let key in this.socialIds) {
+        if (this.socialIds[key].verified) {
+          verifiedEntries++;
+        }
+      }
+      console.log("verifiedEntries", verifiedEntries);
+
+      const percentage = (verifiedEntries / totalEntries) * 100;
+      const interval = setInterval(() => {
+        this.currentTrustScore = parseInt(this.currentTrustScore);
+        this.currentTrustScore += verifiedEntries;
+
+        if (this.currentTrustScore >= percentage.toFixed(0)) {
+          clearInterval(interval);
+          this.currentTrustScore = percentage.toFixed(0);
+        }
+      }, (1 - Math.pow(percentage / 300, 2)) * 100);
+    },
     openWalliDIframe() {
       // this.showIframe = true;
 
@@ -132,16 +197,23 @@ export default {
 
 <style lang="scss">
 .profile {
+  .verified-check {
+    position: absolute;
+    z-index: 2;
+    right: 6px;
+  }
   .connected-wallet {
     border-radius: 19px;
     background-color: #d8d8d844;
     padding: 6px 10px;
     width: fit-content;
+    cursor: pointer;
   }
   .progress-bar {
     background-color: white;
     border-radius: 10px;
     .v-image {
+      transition: max-width 200ms ease-in-out;
       border-radius: 10px;
     }
   }

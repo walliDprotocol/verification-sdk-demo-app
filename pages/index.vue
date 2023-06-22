@@ -31,10 +31,8 @@ export default {
   data() {
     return {
       oauthData: { facebook: {}, linkedin: {} },
-      sessionID: 0,
       showIframe: false,
       dialog: false,
-      connectLoader: false,
       btnText: "Connect",
 
       u_twitter_acodes: "",
@@ -99,14 +97,14 @@ export default {
   },
   mounted() {
     console.log("Mounted method .... ", window.location.search);
-    console.log("Session ID ", this.sessionID);
-    nuxtStorage.localStorage.setData("sessionId", {
-      sessionId: this.sessionID,
-    });
+    // console.log("Session ID ", this.sessionID);
+    // nuxtStorage.localStorage.setData("sessionId", {
+    //   sessionId: this.sessionID,
+    // });
 
     let urlParams = new URLSearchParams(window.location.search);
-    console.log(urlParams.has("oauth_token")); // true
-    console.log(urlParams.has("oauth_verifier")); // true
+    // console.log(urlParams.has("oauth_token")); // true
+    // console.log(urlParams.has("oauth_verifier")); // true
   },
   created() {
     // console.log('Window obj ', window )
