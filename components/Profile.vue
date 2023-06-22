@@ -147,8 +147,6 @@ export default {
     },
     handleOauthData(oauthData) {
       Object.keys(oauthData).forEach((socialId) => {
-        console.log(socialId);
-
         if (
           socialId in this.socialIds &&
           Object.keys(oauthData[socialId]).length > 0
@@ -157,7 +155,6 @@ export default {
             ...this.socialIds[socialId],
             verified: true,
           });
-        console.log(this.socialIds);
       });
       sessionStorage.setItem("socialIds", JSON.stringify(this.socialIds));
       this.increaseTrustScore();
@@ -189,7 +186,9 @@ export default {
     openWalliDIframe() {
       // this.showIframe = true;
 
-      this.verifier.launchVerificationIframe();
+      const params = { configId: "64775dbe48818915e2a8bda3", what: "1233" };
+
+      this.verifier.launchVerificationIframe(params);
     },
   },
 };

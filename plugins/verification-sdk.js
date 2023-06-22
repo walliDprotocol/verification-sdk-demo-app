@@ -29,11 +29,26 @@ export class Verifier {
     this.pubnub.addListener(listener);
   }
 
+  createSearchParams(params) {
+    const searchParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, values]) => {
+      if (Array.isArray(values)) {
+        values.forEach((value) => {
+          searchParams.append(key, value);
+        });
+      } else {
+        searchParams.append(key, values);
+      }
+    });
+    return searchParams;
+  }
+
   launchVerificationIframe(params) {
     const iframeUrl = new URL(IFRAME_URL);
+
+    const searchParams = this.createSearchParams(params);
+    iframeUrl.search = searchParams;
     iframeUrl.searchParams.set("uuid", this.sessionID);
-    iframeUrl.searchParams.set("flow", "celo");
-    iframeUrl.searchParams.set("configId", "64775dbe48818915e2a8bda3");
     window.open(
       iframeUrl,
       // "http://localhost:8080",
