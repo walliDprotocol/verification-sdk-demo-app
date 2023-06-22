@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from "uuid";
 import PubNub from "pubnub";
 
-const IFRAME_URL = "http://localhost:8080"; // process.env.IFRAME_URL;
+const IFRAME_URL = process.env.IFRAME_URL; // "http://localhost:8080";
 
 export class Verifier {
   sessionID;

@@ -217,15 +217,15 @@ export default {
     }
   }
   .v-sheet {
-    background-color: transparent;
-    box-shadow: none;
+    background-color: transparent !important;
+    box-shadow: none !important;
     padding-left: 50px;
     padding-right: 50px;
   }
   .card-bg {
     padding: 34px 24px;
     border-radius: 24px;
-    background-color: #80809742;
+    background-color: #80809742 !important;
     min-height: 330px;
 
     .row .col:nth-child(2) {

@@ -2,11 +2,13 @@
   <v-app dark>
     <v-app-bar dark fixed style="background-color: #8080971e">
       <v-toolbar-title>
-        <v-img
-          :max-width="'140px'"
-          contain
-          :src="require('@/assets/logo-wallid.png')"
-        ></v-img>
+        <nuxt-link :to="'/'">
+          <v-img
+            :max-width="'140px'"
+            contain
+            :src="require('@/assets/logo-wallid.png')"
+          ></v-img>
+        </nuxt-link>
       </v-toolbar-title>
       <v-spacer />
 

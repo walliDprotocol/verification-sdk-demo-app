@@ -375,8 +375,8 @@ export default {
 </script>
 <style>
 .wallidao {
-  width: 100vw;
-  max-width: unset;
+  width: 100vw !important;
+  max-width: unset !important;
   height: 100vh;
   background: url("@/assets/background.jpg");
   background-repeat: no-repeat;
