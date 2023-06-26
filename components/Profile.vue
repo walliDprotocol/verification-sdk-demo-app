@@ -10,7 +10,7 @@
           @click="resetCache()"
           class="connected-wallet d-flex"
         >
-          <span style="font-size: 8px; margin-top: 4px; margin-right: 2px">
+          <span style="font-size: 6px; margin-top: 5px; margin-right: 4px">
             🟢
           </span>
           <h4>
@@ -28,7 +28,7 @@
             :max-width="160"
             :src="require('@/assets/avatar.png')"
           ></v-img>
-          <h2 class="mb-3">Georgeb</h2>
+          <h2 class="mb-3">{{ profileName }}</h2>
           <h5>{{ walletAddress }}</h5>
         </v-card>
       </v-col>
@@ -129,7 +129,8 @@ export default {
   },
   data() {
     return {
-      walletAddress: "0x707…dAa8",
+      walletAddress: "filipeveiga.near",
+      profileName: "Filipe Veiga",
       currentTrustScore: 0,
       socialIds: DEFAULT_SOCIAL_IDS,
       oauthData: {},
@@ -188,7 +189,10 @@ export default {
     openWalliDIframe() {
       // this.showIframe = true;
 
-      const params = { configId: "64775dbe48818915e2a8bda3", what: "1233" };
+      const params = {
+        configId: "64775dbe48818915e2a8bda3",
+        // flow: "celo",
+      };
 
       this.verifier.launchVerificationIframe(params);
     },
