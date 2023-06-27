@@ -6,6 +6,7 @@
       </v-col>
       <v-col class="" justify="center" align="right">
         <div
+          v-if="walletAddress"
           title="Logout"
           @click="resetCache()"
           class="connected-wallet d-flex"
@@ -26,10 +27,10 @@
             class="mb-3"
             contain
             :max-width="160"
-            :src="require('@/assets/avatar.png')"
+            :src="require(`@/assets/photos/${profilePhoto}`)"
           ></v-img>
-          <h2 class="mb-3">{{ profileName }}</h2>
-          <h5>{{ walletAddress }}</h5>
+          <h2 class="mb-3">{{ getProfileName }}</h2>
+          <h5 v-if="walletAddress">{{ walletAddress }}</h5>
         </v-card>
       </v-col>
 
@@ -129,12 +130,18 @@ export default {
   },
   data() {
     return {
-      walletAddress: "filipeveiga.near",
-      profileName: "Filipe Veiga",
+      walletAddress: null,
+      profileName: "[Your name]",
+      profilePhoto: "placeholder-avatar.png",
       currentTrustScore: 0,
       socialIds: DEFAULT_SOCIAL_IDS,
       oauthData: {},
     };
+  },
+  computed: {
+    getProfileName() {
+      return this.socialIds?.["twitter"]?.username || this.profileName;
+    },
   },
   methods: {
     resetCache() {
@@ -158,10 +165,24 @@ export default {
             verified: true,
           });
       });
-      sessionStorage.setItem("socialIds", JSON.stringify(this.socialIds));
       this.increaseTrustScore();
-    },
 
+      this.updateProfileData(oauthData);
+
+      sessionStorage.setItem("socialIds", JSON.stringify(this.socialIds));
+    },
+    updateProfileData(oauthData) {
+      console.log(oauthData);
+      if (this.socialIds["nearTokens"]?.verified) {
+        this.walletAddress = "filipeveiga.near";
+      }
+
+      if (this.socialIds["twitter"]?.verified) {
+        this.profilePhoto = "avatar.png";
+      }
+      this.socialIds["twitter"].username =
+        oauthData?.["twitter"]?.name || this.socialIds?.["twitter"]?.username;
+    },
     async increaseTrustScore() {
       const totalEntries = Object.keys(this.socialIds).length;
       let verifiedEntries = 0;
