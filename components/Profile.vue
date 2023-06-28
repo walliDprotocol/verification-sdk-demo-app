@@ -174,7 +174,8 @@ export default {
     updateProfileData(oauthData) {
       console.log(oauthData);
       if (this.socialIds["nearTokens"]?.verified) {
-        this.walletAddress = "filipeveiga.near";
+        this.walletAddress =
+          oauthData?.["nearTokens"]?.accountId || "filipeveiga.near";
       }
 
       if (this.socialIds["twitter"]?.verified) {
