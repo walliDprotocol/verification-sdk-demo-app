@@ -57,8 +57,8 @@ Trust scores based on social network history and on-chain credentials
 | Github   | <5 repos              | +10    |
 | Github   | <5 contributions      | +10    |
 | Google   | Account               | +1     |
-| NEAR     | Wallet address        | +1     |
-| NEAR     | < 10 NEAR tokens      | +50    |
+| NEAR testnet    | Wallet address        | +1     |
+| NEAR testnet   | < 10 NEAR tokens      | +50    |
 
 
 
@@ -67,7 +67,7 @@ Trust scores based on social network history and on-chain credentials
 
 ### Use case
 
-Airdrop an NFT to a Twitter account after verifying username and token ownership 
+Airdrop a NFT to a Twitter account after verifying username and token ownership on CELO network.
 
 ### How to test it
 
@@ -76,6 +76,7 @@ Airdrop an NFT to a Twitter account after verifying username and token ownership
 - Get 50 WalliD test tokens in the “faucet button”
 - Click on “Claim NFT” to launch WalliD flow
 - Verify Twitter account
+- Connect Celo wallet
 - Verify WalliD token  ownership
 - Get access to the NFT claim page
 
@@ -84,7 +85,7 @@ Airdrop an NFT to a Twitter account after verifying username and token ownership
 | Data Source | Parameter          | Score |
 |----------|-----------------------|--------|
 | Twitter  | Account               | +1     |
-| NEAR | > 10 NEAR tokens          | +50    |
+| CELO Alfajores Network | >0 WalliD test tokens     | +50    |
 
 
 
